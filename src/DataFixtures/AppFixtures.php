@@ -14,6 +14,8 @@ class AppFixtures extends Fixture
         $ad->setUsername('default');
         $ad->setPassword('default');
         $ad->setToken('default');
+        $ad->setClientid('default');
+        $ad->setSecret('default');
 
         $manager->persist($ad);
         $manager->flush();

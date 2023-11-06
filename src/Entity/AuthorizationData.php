@@ -19,8 +19,14 @@ class AuthorizationData
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $token = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $clientid = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $secret = null;
 
     public function getId(): ?int
     {
@@ -59,6 +65,30 @@ class AuthorizationData
     public function setToken(?string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getClientid(): ?string
+    {
+        return $this->clientid;
+    }
+
+    public function setClientid(?string $clientid): static
+    {
+        $this->clientid = $clientid;
+
+        return $this;
+    }
+
+    public function getSecret(): ?string
+    {
+        return $this->secret;
+    }
+
+    public function setSecret(?string $secret): static
+    {
+        $this->secret = $secret;
 
         return $this;
     }

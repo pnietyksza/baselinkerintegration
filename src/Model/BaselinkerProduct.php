@@ -2,32 +2,54 @@
 
 namespace App\Model;
 
-final class BaselinkerProduct
+class BaselinkerProduct
 {
-    public $uuid;
-    public $identifier;
-    public $enabled;
-    public $manufacturer;
+    public $storage_id;
+    public $product_id;
     public $ean;
-    public $erpName;
-    public $tradeName;
-    public $nameRequiredByLaw;
-    public $created;
-    public $updated;
-    public $associations;
+    public $sku;
+    public $name;
+    public $quantity;
+    public $price_brutto;
+    public $price_wholesale_netto;
+    public $tax_rate;
+    public $weight;
+    public $description;
+    public $description_extra1;
+    public $description_extra2;
+    public $description_extra3;
+    public $description_extra4;
+    public $man_name;
+    public $category_id;
+    public $images = [];
+    public $features = [];
 
-    public function __construct($data)
+    public function __construct(array $data)
     {
-        $this->uuid = $data['uuid'];
-        $this->identifier = $data['identifier'];
-        $this->enabled = $data['enabled'];
-        $this->manufacturer = $data['values']['manufacturer'][0]['data'];
-        $this->ean = $data['values']['ean'][0]['data'];
-        $this->erpName = $data['values']['erp_name'][0]['data'];
-        $this->tradeName = $data['values']['Trade_name'][0]['data'];
-        $this->nameRequiredByLaw = $data['values']['Name_required_by_law'][0]['data'];
-        $this->created = $data['created'];
-        $this->updated = $data['updated'];
-        $this->associations = $data['associations'];
+        $this->storage_id = $data['storage_id'] ?? null;
+        $this->product_id = $data['product_id'] ?? null;
+        $this->ean = $data['ean'] ?? null;
+        $this->sku = $data['sku'] ?? null;
+        $this->name = $data['name'] ?? null;
+        $this->quantity = $data['quantity'] ?? null;
+        $this->price_brutto = $data['price_brutto'] ?? null;
+        $this->price_wholesale_netto = $data['price_wholesale_netto'] ?? null;
+        $this->tax_rate = $data['tax_rate'] ?? null;
+        $this->weight = $data['weight'] ?? null;
+        $this->description = $data['description'] ?? null;
+        $this->description_extra1 = $data['description_extra1'] ?? null;
+        $this->description_extra2 = $data['description_extra2'] ?? null;
+        $this->description_extra3 = $data['description_extra3'] ?? null;
+        $this->description_extra4 = $data['description_extra4'] ?? null;
+        $this->man_name = $data['man_name'] ?? null;
+        $this->category_id = $data['category_id'] ?? null;
+
+        if (isset($data['images']) && is_array($data['images'])) {
+            $this->images = $data['images'];
+        }
+
+        if (isset($data['features']) && is_array($data['features'])) {
+            $this->features = $data['features'];
+        }
     }
 }

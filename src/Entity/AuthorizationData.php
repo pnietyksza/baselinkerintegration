@@ -28,6 +28,9 @@ class AuthorizationData
     #[ORM\Column(length: 255)]
     private ?string $secret = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $bltoken = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class AuthorizationData
     public function setSecret(?string $secret): static
     {
         $this->secret = $secret;
+
+        return $this;
+    }
+
+    public function getBltoken(): ?string
+    {
+        return $this->bltoken;
+    }
+
+    public function setBltoken(?string $bltoken): static
+    {
+        $this->bltoken = $bltoken;
 
         return $this;
     }

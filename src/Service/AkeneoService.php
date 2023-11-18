@@ -31,29 +31,29 @@ class AkeneoService implements IntegrationInterface
         $authorization = 'Basic ' . base64_encode($clientId . ':' . $secret);
         $username = $data->getUsername();
         $password = $data->getPassword();
-        $contentType = "application/json";
-        $url = "";
-        $grantType = "password";
+        $contentType = 'application/json';
+        $url = '';
+        $grantType = 'password';
 
         $client = new Client();
 
         $headers = [
-            "Content-Type" => $contentType,
-            "Authorization" => $authorization,
+            'Content-Type' => $contentType,
+            'Authorization' => $authorization,
         ];
 
         $formParams = [
-            "grant_type" => $grantType,
-            "username" => $username,
-            "password" => $password
+            'grant_type' => $grantType,
+            'username' => $username,
+            'password' => $password
         ];
 
         $response = $client->request(
-            "POST",
+            'POST',
             $url,
             [
-                "headers" => $headers,
-                "json" => $formParams,
+                'headers' => $headers,
+                'json' => $formParams,
             ]
         );
 
@@ -87,17 +87,17 @@ class AkeneoService implements IntegrationInterface
         $authorizationRepository = $this->entityManager->getRepository(AuthorizationData::class);
         $data = $authorizationRepository->findOneBy([], ['id' => 'ASC']);
         $token = $data->getToken();
-        $url = "";
+        $url = '';
         $client = new Client();
         $dataBaselinker = [];
 
         try {
             $response = $client->request(
-                "GET",
+                'GET',
                 $url,
                 [
-                    "headers" => [
-                        "Authorization" => "Bearer " . $token,
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $token,
                     ]
                 ]
             );
@@ -106,26 +106,10 @@ class AkeneoService implements IntegrationInterface
         }
 
         $result = json_decode($response->getBody(), true);
-        $products = $result["_embedded"]["items"];
 
-        foreach ($products as $product) {
+        $products = $result['_embedded']['items'];
 
-            $dataBaselinker[$product["uuid"]] = [
-                "ean" => $product["values"]["ean"][0]["data"] ? $product["values"]["ean"][0]["data"] : "",
-                "name" => $product["values"]["Name_required_by_law"][0]["data"] ? $product["values"]["Name_required_by_law"][0]["data"] : "",
-                "sku" => $product["identifier"] ? $product["identifier"] : "",
-                "family" => $product["family"],
-                "enabled" => $product["enabled"],
-                "groups" => $product["groups"],
-                "parent" => $product["parent"],
-                "created" => $product["created"],
-                "updated" => $product["updated"],
-                "associations" => $product["associations"],
-                "values" => $product["values"],
-            ];
-        }
-
-        return $dataBaselinker;
+        return $products;
     }
 
     public function pullData(array $data): bool

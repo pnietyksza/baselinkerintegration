@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Model\AkeneoProduct;
+use App\Model\BaselinkerProduct;
 use App\ServiceInterface\IntegrationInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -23,7 +24,7 @@ class BaselinkerService implements IntegrationInterface
     {
         $authorizationRepository = $this->entityManager->getRepository(AuthorizationData::class);
 
-        $data = $authorizationRepository->findOneBy([], ["id" => "ASC"]);
+        $data = $authorizationRepository->findOneBy([], ['id' => 'ASC']);
 
 
         return 0;
@@ -37,7 +38,10 @@ class BaselinkerService implements IntegrationInterface
     public function pullData(array $data): bool
     {
         foreach ($data as $key => $value) {
-            $product = new AkeneoProduct($value);
+            $akeneoProduct = new AkeneoProduct($value);
+            $baselinkerProduct = new BaselinkerProduct($value);
+            dump($akeneoProduct,$baselinkerProduct);
+            exit;
         }
 
 
